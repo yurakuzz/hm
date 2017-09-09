@@ -34,7 +34,7 @@ function isAllTrue(array, fn) {
         }
 }
        
-    fn(); 
+    fn; 
 }
 
 /*
