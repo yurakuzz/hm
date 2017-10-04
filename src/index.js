@@ -8,11 +8,7 @@
  * @param {function} fn - обработчик
  */
 function addListener(eventName, target, fn) {
-    var fn = function() {
-        alert('Сработал обработчик');
-    };
-    
-    target.addEventListener('eventName', fn);
+    target.addEventListener(eventName, fn);
 }
 
 /**
@@ -23,11 +19,8 @@ function addListener(eventName, target, fn) {
  * @param {function} fn - обработчик
  */
 function removeListener(eventName, target, fn) {
-    var fn = function() {
-        alert('Сработал обработчик');
-    };
-    
-    target.removeEventListener('eventName', fn);
+  
+    target.removeEventListener(eventName, fn);
 }
 
 /**
@@ -37,7 +30,7 @@ function removeListener(eventName, target, fn) {
  * @param {Element} target - элемент, на который нужно добавить обработчик
  */
 function skipDefault(eventName, target) {
-    target.addEventListener('eventName', function(e) {
+    target.addEventListener(eventName, function(e) {
         e.preventDefault();
         
     })
@@ -49,6 +42,8 @@ function skipDefault(eventName, target) {
  * @param {Element} target - элемент, на который нужно добавить обработчик
  */
 function emulateClick(target) {
+    var event = new Event('click');
+    elem.dispatchEvent(event);
 }
 
 /**
@@ -59,13 +54,13 @@ function emulateClick(target) {
  * @param {function} fn - функция, которую нужно вызвать при клике на элемент BUTTON внутри target
  */
 function delegate(target, fn) {
-    var fn = function(event) {
+    var fun = function(event) {
         if (event.target.tagName === 'BUTTON') {
-        console.log("Сработал обработчик!");
+          fn(event);
         }
     }
     
-    target.addEventListener('click', fn);
+    target.addEventListener('click', fun);
     
     
 }
@@ -80,11 +75,12 @@ function delegate(target, fn) {
  * @param {function} fn - обработчик
  */
 function once(target, fn) {
-    var fn = function(event) {
-        alert('Event happening!');
-            
+    
+    var fun = function(event) {
+        target.removeEventListener('click', fun);
+        fn()    
     }
-    target.addEventListener('click', fn);
+    target.addEventListener('click', fun);
 }
 
 export {
